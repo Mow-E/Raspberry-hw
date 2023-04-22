@@ -1,8 +1,12 @@
 import datetime
 import json
+import os
 import time
 
 from stomp_ws.client import Client
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
 
 STATE_START = 0
 STATE_WORK = 1
@@ -29,10 +33,7 @@ if __name__ == '__main__':
     client = Client("ws://127.0.0.1:8080/websocket")
 
     # connect to the endpoint
-    client.connect(
-        #     login="name",
-        #     passcode="45C82C421EBA87C8131E220F878E4145",
-        timeout=0)
+    client.connect(headers={"x-auth-token": os.getenv("TOKEN")}, timeout=0)
 
     x = 1
     y = 2
