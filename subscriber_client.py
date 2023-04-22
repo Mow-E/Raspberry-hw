@@ -17,7 +17,7 @@ if __name__ == '__main__':
     # logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
     # open transport
-    client = Client("ws://127.0.0.1:8080/websocket")
+    client = Client(f"ws://{os.getenv('HOST')}:{os.getenv('PORT')}/websocket")
 
     # connect to the endpoint
     client.connect(headers={"x-auth-token": os.getenv("TOKEN")}, timeout=0)
