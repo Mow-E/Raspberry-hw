@@ -28,7 +28,7 @@ def response(x, y, state, extended=""):
             'y': y,
             'time': int(datetime.datetime.now().timestamp()),
             'state': state,
-            'extended': extended
+            'extra': extended
         }
     )
 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
             client.send("/app/coordinate", body=response(x, y, STATE_COLLISION, str(id)))
 
             time.sleep(1)
-            with open('data/images/image_test2.jpg', 'rb') as f:
+            with open('data/images/test_image_14.jpg', 'rb') as f:
                 image_data = f.read()
                 # data += image_data
 
