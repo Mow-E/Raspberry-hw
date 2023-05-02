@@ -1,0 +1,4 @@
+websocket_client>=0.57.0
+websocket~=0.2.1
+websocket-client~=1.5.1
+python-dotenv~=1.0.0
