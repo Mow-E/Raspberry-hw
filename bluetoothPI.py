@@ -1,3 +1,6 @@
+# This one is with RFCOMM which will not be used.
+
+""" 
 from bluetooth import *
 import os
 
@@ -53,8 +56,8 @@ class BluetoothPI:
         try:
             message = self.clientSocket.recv(1024)
             print("Recieved %s" % message)
-            """ self.clientSocket.close()
-            self.serverSocket.close() """
+            self.clientSocket.close()
+            self.serverSocket.close()
             return message
         except IOError:
             print("Disconnected")
@@ -65,3 +68,4 @@ class BluetoothPI:
         # This one is not neccesary yet that's why it's not implemented.
         b = 1 
 
+ """
