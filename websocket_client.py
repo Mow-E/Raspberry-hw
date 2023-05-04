@@ -23,7 +23,7 @@ CHUNK_SIZE = 4000
 def response(x, y, state, extended=""):
     return json.dumps(
         {
-            'mowerId': "e193c17a-9c4e-4e3b-b2bc-f7a8a31a42b0",
+            'mowerId': os.getenv('MOWER_ID'),
             'x': x,
             'y': y,
             'time': int(datetime.datetime.now().timestamp()),
