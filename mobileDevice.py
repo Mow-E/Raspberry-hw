@@ -1,11 +1,11 @@
 from pybleno import Characteristic
-import array
+from pyee import EventEmitter
 
 ''' Charasteristics from pybleno
     This will be the charasteristics of the connected device. It will be able to read, write data.
     recievedData: a bytearray which will store the data from the connected device.
     '''
-class mobile(Characteristic):
+class mobile(Characteristic, EventEmitter):
 
     def __init__(self, uuid):
         self.recievedData = bytearray()
@@ -33,6 +33,7 @@ class mobile(Characteristic):
         callback: This you need to call after you have proccessed the data. 
         '''
     def onWriteRequest(self, data, offset, withoutResponse, callback):
+        print("onWriteRequest")
         # Checks if the offset is not zero, which means that it will not start to read from the first position.
         if offset:
             callback(Characteristic.RESULT_ATTR_NOT_LONG)
@@ -47,11 +48,12 @@ class mobile(Characteristic):
             self.recievedData.extend(data)
             if b'*' in data:
                 self.recievedData.pop()
-                print(self.recievedData.decode('ASCII'))
-                dataToSerialUart = self.recievedData
+                print(self.recievedData)
+                dataToSerialUart = self.recievedData.decode('ASCII')
                 self.recievedData.clear()
+                print(dataToSerialUart)
                 callback(Characteristic.RESULT_SUCCESS)
-                return dataToSerialUart
+                self.emit('dataReceived', dataToSerialUart)
             callback(Characteristic.RESULT_SUCCESS)
 
         

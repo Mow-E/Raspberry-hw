@@ -1,12 +1,12 @@
 from pybleno import *
 from mobileDevice import mobile
-import time
-import sys
+
 
 class bluetoothLoPo:
     def __init__(self) -> None:
-        # Create a bluetooth instance of Bleno()
+        # Create a bluetooth instance of Bleno() and mobileDevice()
         self.bleno = Bleno()
+        self.mobile = mobile('ec0F')
         
     # This creates a callback function that will be called when the state of the instance is changed. "" is the instance and self. is the callbacks function
     def setup(self):
@@ -35,8 +35,8 @@ class bluetoothLoPo:
                 BlenoPrimaryService({
                     'uuid': 'ec00',
                     'characteristics':[
-                        mobile('ec0F')
-                    ]
+                        self.mobile
+                    ],
                 })
             ])
         else:
@@ -61,15 +61,13 @@ class bluetoothLoPo:
     def disconnect(self):
         self.bleno.disconnect()
 
-ble = bluetoothLoPo()
-ble.start()
-
-
+""" test = bluetoothLoPo()
+test.start()
 
 try:
     while True:
         time.sleep(1)
 except KeyboardInterrupt:
-    ble.stopAdvertising()
-    ble.disconnect()
-    sys.exit(0)
+    test.stopAdvertising()
+    test.disconnect()
+    sys.exit(0) """

@@ -63,7 +63,7 @@ if __name__ == '__main__':
             client.send("/app/coordinate", body=response(x, y, STATE_COLLISION, str(id)))
 
             time.sleep(1)
-            with open('/home/admin/Documents/Embedded/RaspberryPiPhotos/test.jpg', 'rb') as f:
+            with open('/home/admin/Documents/Embedded/RaspberryPiPhotos/collisionPicture.jpg', 'rb') as f:
                 image_data = f.read()
                 # data += image_data
 
