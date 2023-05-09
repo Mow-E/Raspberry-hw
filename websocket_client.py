@@ -20,12 +20,13 @@ STATE_COLLISION = 4
 CHUNK_SIZE = 4000
 
 
-def response(x, y, state, extended=""):
+def response(x, y, z, state, extended=""):
     return json.dumps(
         {
             'mowerId': os.getenv('MOWER_ID'),
             'x': x,
             'y': y,
+            'z': z,
             'time': int(datetime.datetime.now().timestamp()),
             'state': state,
             'extra': extended
@@ -43,8 +44,9 @@ if __name__ == '__main__':
 
     x = 1
     y = 2
+    z = 3
 
-    client.send("/app/coordinate", body=response(x, y, STATE_START))
+    client.send("/app/coordinate", body=response(x, y, z, STATE_START))
 
     time.sleep(2)
 
@@ -52,18 +54,19 @@ if __name__ == '__main__':
         time.sleep(1)
         x = x + 1
         y = y + 1
+        z = z + 1
         if i != 4:
             # send msg to channel
-            client.send("/app/coordinate", body=response(x, y, STATE_WORK))
+            client.send("/app/coordinate", body=response(x, y, z, STATE_WORK))
         else:
             # extended = str(base64.encode(secrets.token_bytes(8)))
             id = int.from_bytes(secrets.token_bytes(4), "big")
             # extended = str(int.from_bytes(id, "big"))
 
-            client.send("/app/coordinate", body=response(x, y, STATE_COLLISION, str(id)))
+            client.send("/app/coordinate", body=response(x, y, z, STATE_COLLISION, str(id)))
 
             time.sleep(1)
-            with open('/home/admin/Documents/Embedded/RaspberryPiPhotos/test.jpg', 'rb') as f:
+            with open('data/images/test_image_4.jpg', 'rb') as f:
                 image_data = f.read()
                 # data += image_data
 
@@ -87,6 +90,6 @@ if __name__ == '__main__':
 
     time.sleep(1)
 
-    client.send("/app/coordinate", body=response(x, y, STATE_END))
+    client.send("/app/coordinate", body=response(x, y, z, STATE_END))
 
     client.disconnect()
