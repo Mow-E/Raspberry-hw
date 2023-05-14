@@ -17,7 +17,8 @@ if __name__ == '__main__':
     # logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
     # open transport
-    client = Client(f"ws://{os.getenv('HOST')}:{os.getenv('PORT')}/websocket")
+    # client = Client(f"ws://{os.getenv('HOST')}:{os.getenv('PORT')}/websocket")
+    client = Client(f"ws://{os.getenv('HOST')}/websocket")
 
     # connect to the endpoint
     client.connect(headers={"x-auth-token": os.getenv("TOKEN")}, timeout=0)

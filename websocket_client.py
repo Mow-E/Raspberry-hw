@@ -37,7 +37,8 @@ def response(x, y, z, state, extended=""):
 if __name__ == '__main__':
 
     # open transport
-    client = Client(f"ws://{os.getenv('HOST')}:{os.getenv('PORT')}/websocket")
+    # client = Client(f"ws://{os.getenv('HOST')}:{os.getenv('PORT')}/websocket")
+    client = Client(f"ws://{os.getenv('HOST')}/websocket")
 
     # connect to the endpoint
     client.connect(headers={"x-auth-token": os.getenv("TOKEN")}, timeout=0)
