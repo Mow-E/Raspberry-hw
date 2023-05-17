@@ -23,7 +23,7 @@ class bluetoothLoPo():
         print(f"on -> stateChange: {state}")
 
         if state == "poweredOn":
-            self.bleno.startAdvertising("Rasberry pi bleno", ["ec00"])
+            self.bleno.startAdvertising("Mow-E", ["ec00"])
         else:
             self.bleno.stopAdvertising()
             
