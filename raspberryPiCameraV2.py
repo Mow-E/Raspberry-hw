@@ -14,6 +14,3 @@ class RasberryPiCameraV2:
     def stopRecording(self):
         # For future implementations
         pass
-
-""" raspberryCamera = RasberryPiCameraV2()
-raspberryCamera.takePicture() """

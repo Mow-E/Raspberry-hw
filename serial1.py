@@ -29,21 +29,12 @@ class SerialUart:
     
     # Returns message from Arduino
     def retrieveSerial(self):
-        messageFromArduino = self.serialUa.readline().decode()
-        self.serialUa.flush()
-        return messageFromArduino
+        if self.serialUa.in_waiting > 0:
+            messageFromArduino = self.serialUa.readline().decode()
+            self.serialUa.flush()
+            return messageFromArduino
 
-""" ser = SerialUart()
-ser.setup() """
 
-""" while True:
-    message = input("Enter some letter: ")
-    ser.write(message.encode())
-    time.sleep(1)
-    print("Sent: ", message)
-    response = ser.readline().decode()
-    ser.flush()
-    print("Received: ", response) """
     
     
     

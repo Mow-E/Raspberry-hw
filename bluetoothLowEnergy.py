@@ -1,12 +1,15 @@
 from pybleno import *
 from mobileDevice import mobile
+from pyee import EventEmitter
 
 
-class bluetoothLoPo:
+
+class bluetoothLoPo():
     def __init__(self) -> None:
         # Create a bluetooth instance of Bleno() and mobileDevice()
         self.bleno = Bleno()
         self.mobile = mobile('ec0F')
+        self.emitter = EventEmitter()
         
     # This creates a callback function that will be called when the state of the instance is changed. "" is the instance and self. is the callbacks function
     def setup(self):
@@ -45,10 +48,12 @@ class bluetoothLoPo:
     # When a device is connected it will print its adress.
     def onAccept(self, clientAddress):
         print(f"Device connected: {clientAddress}")
+        self.emitter.emit('acceptDevice')
 
     # When a device is disconnected it will print its adress.
     def onDisconnect(self, clientAddress):
         print(f"Device disconnected: {clientAddress}")
+        self.emitter.emit('disconnectDevice')
     
     # Starts the bluetooth module 
     def start(self):
