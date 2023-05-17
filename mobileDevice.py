@@ -21,7 +21,7 @@ class mobile(Characteristic, EventEmitter):
         callback: This you need to call once you have prepared the data you want to sent to the connected device.
         '''
     def onReadRequest(self, offset, callback):
-        data = bytearray('Your data here', 'ASCII')
+        data = bytearray('e193c17a-9c4e-4e3b-b2bc-f7a8a31a42b0', 'ASCII')
         callback(Characteristic.RESULT_SUCCESS,data[offset:] )
     
     ''' onWriteRequest handles the input from the connected device.
