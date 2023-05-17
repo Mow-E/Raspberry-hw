@@ -32,6 +32,7 @@ class mobile(Characteristic, EventEmitter):
                          device after the data is written.
         callback: This you need to call after you have proccessed the data. 
         '''
+    
     def onWriteRequest(self, data, offset, withoutResponse, callback):
         print("onWriteRequest")
         # Checks if the offset is not zero, which means that it will not start to read from the first position.
@@ -48,12 +49,12 @@ class mobile(Characteristic, EventEmitter):
             self.recievedData.extend(data)
             if b'*' in data:
                 self.recievedData.pop()
-                print(self.recievedData)
-                dataToSerialUart = self.recievedData.decode('ASCII')
-                self.recievedData.clear()
-                print(dataToSerialUart)
-                callback(Characteristic.RESULT_SUCCESS)
-                self.emit('dataReceived', dataToSerialUart)
+                if len(self.recievedData):
+                    dataToSerialUart = self.recievedData.decode('ASCII')
+                    self.recievedData.clear()
+                    print(dataToSerialUart)
+                    self.emit('dataReceived', dataToSerialUart)
+                else:
+                    print("Empty")
             callback(Characteristic.RESULT_SUCCESS)
-
         
