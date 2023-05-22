@@ -15,6 +15,7 @@ STATE_WORK = 1
 STATE_END = 2
 STATE_ERROR = 3
 STATE_COLLISION = 4
+STATE_BORDER = 5
 
 # define chunk size in bytes
 CHUNK_SIZE = 4000

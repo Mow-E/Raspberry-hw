@@ -19,16 +19,29 @@ Licensed under the MIT license.
 All text above must be included in any redistribution.
 """
 
-import os
+""" import os
 import time
-import json
+import json """
+""" 
+
 from math import cos, sin, pi, floor
 # import pygame
 import rplidar
 from rplidar import RPLidar, RPLidarException
 import numpy as np
+
+import matplotlib.pyplot as plt
+from threading import Thread """
+import time
+from math import cos, sin, pi, floor
+#import rplidar
+from rplidar import RPLidar, RPLidarException
+import numpy as np
 import matplotlib.pyplot as plt
 from threading import Thread
+#from breezyslam.algorithms import RMHC_SLAM
+from breezyslam.sensors import RPLidarA1 as LaserModel
+from roboviz import MapVisualizer
 
 
 from breezyslam.algorithms import RMHC_SLAM
@@ -49,33 +62,35 @@ class SLAMRPi:
         W = 640
         H = 480
 
-
         self.MAP_SIZE_PIXELS         = 250
         self.MAP_SIZE_METERS         = 5
         self.MIN_SAMPLES   = 150
-
+        
         self.SCAN_BYTE = b'\x20'
         self.SCAN_TYPE = 129
-
+        
         self.PORT_NAME = '/dev/ttyUSB0'
         self.lidar = RPLidar(self.PORT_NAME)
-
+        
         # Create an RMHC SLAM object with a laser model and optional robot model
         self.slam = RMHC_SLAM(LaserModel(), self.MAP_SIZE_PIXELS, self.MAP_SIZE_METERS)
-
+        
         # # Set up a SLAM display
-        self.viz = MapVisualizer(self.MAP_SIZE_PIXELS, self.MAP_SIZE_METERS, 'SLAM', show_trajectory=True)
-
+        #self.viz = MapVisualizer(self.MAP_SIZE_PIXELS, self.MAP_SIZE_METERS, 'SLAM', show_trajectory=True)
+        
         # Initialize an empty trajectory
         self.trajectory = []
 
         #Define a filename for json file
         self.filename = 'lidar_data.json'
         #Create an empty dictionary to store lidar data
+
         self.slamData = {'Current_position':[]}
         #Store current position
+   
         self.current_position = []
         # To exit lidar scan thread gracefully
+ 
         self.thread = None
 
         # Initialize empty map
@@ -92,14 +107,17 @@ class SLAMRPi:
         self.scan_data = [0]*360
 
     def slam_compute(self,pose, mapbytes):
-
+        
         try:
 
             # We will use these to store previous scan in case current scan is inadequate
             self.previous_distances = None
             self.previous_angles = None
             self.scan_count = 0
+            
             for scan in self.lidar.iter_scans():
+                
+                
 
                 # To stop the thread
                 #if not self.runThread:
@@ -126,12 +144,7 @@ class SLAMRPi:
 
                 # Get new position
                 self.pose[0], self.pose[1], self.pose[2] = self.slam.getpos()
-                # self.x = 2500 - self.pose[0]
-                # self.y = 2500 - self.pose[1]
-                # print((self.x,self.y))
-                # Get current map bytes as grayscale
                 self.slam.getmap(mapbytes)
-                #return self.x, self.y
         except KeyboardInterrupt:
             self.lidar.stop()
             self.lidar.disconnect()
@@ -145,26 +158,13 @@ class SLAMRPi:
     def join_thread(self):
         if self.thread:
             self.thread.join()
-            print("Thread joined")
+            #print("Thread joined")
         else:
             print("No active thread")
 
     def get_position(self):
-        self.x = 2500 - self.pose[0]
-        self.y = 2500 - self.pose[1]
+        self.x =  2500 - self.pose[0]
+        self.y =  2500 - self.pose[1]
         return (self.x,self.y)
 
-#lidar_SLAM = SLAMRPi()
-
-#Start the thread
-#lidar_SLAM.compute_position()
-
-
-#Do other tasks while the thread is running
-#while True:
-    #time.sleep(0.5)
-    #print("x,y:", lidar_SLAM.get_position())
-
-#Join the thread if needed
-#lidar_SLAM.join_thread()
 
