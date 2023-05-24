@@ -166,5 +166,3 @@ class SLAMRPi:
         self.x =  2500 - self.pose[0]
         self.y =  2500 - self.pose[1]
         return (self.x,self.y)
-
-
