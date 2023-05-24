@@ -6,7 +6,7 @@ class SerialUart:
     def __init__(self) -> None:
             self.serialUa = serial.Serial(
                 port='/dev/ttyUSB0',
-                baudrate=9600,
+                baudrate=115200,
                 timeout  = 0.1,
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
@@ -33,6 +33,12 @@ class SerialUart:
             messageFromArduino = self.serialUa.readline().decode()
             self.serialUa.flush()
             return messageFromArduino
+        """ while True:
+            if self.serialUa.in_waiting > 0:
+                messageFromArduino = self.serialUa.readline().decode()
+                self.serialUa.flush()
+                return messageFromArduino """
+                
 
 
     
